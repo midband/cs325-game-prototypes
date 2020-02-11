@@ -1,139 +1,187 @@
-var Breakout = new Phaser.Class({
+"use strict";
 
-    Extends: Phaser.Scene,
+window.onload = function() {
+    // You can copy-and-paste the code from any of the examples at http://examples.phaser.io here.
+    // You will need to change the fourth parameter to "new Phaser.Game()" from
+    // 'phaser-example' to 'game', which is the id of the HTML element where we
+    // want the game to go.
+    // The assets (and code) can be found at: https://github.com/photonstorm/phaser/tree/master/examples/assets
+    // You will need to change the paths you pass to "game.load.image()" or any other
+    // loading functions to reflect where you are putting the assets.
+    // All loading functions will typically all be found inside "preload()".
+    
+        var Breakout = new Phaser.Class({
 
-    initialize:
+        Extends: Phaser.Scene,
 
-    function Breakout ()
-    {
-        Phaser.Scene.call(this, { key: 'breakout' });
+        initialize:
 
-        this.bricks;
-        this.paddle;
-        this.ball;
-    },
+        function Breakout ()
+        {
+            Phaser.Scene.call(this, { key: 'breakout' });
 
-    preload: function ()
-    {
-        this.load.atlas('assets', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
-    },
+            this.bricks;
+            this.paddle;
+            this.ball;
+        },
 
-    create: function ()
-    {
-        //  Enable world bounds, but disable the floor
-        this.physics.world.setBoundsCollision(true, true, true, false);
+        preload: function ()
+        {
+            this.load.atlas('assets', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
+        },
 
-        //  Create the bricks in a 10x6 grid
-        this.bricks = this.physics.add.staticGroup({
-            key: 'assets', frame: [ 'blue1', 'red1', 'green1', 'yellow1', 'silver1', 'purple1' ],
-            frameQuantity: 10,
-            gridAlign: { width: 10, height: 6, cellWidth: 64, cellHeight: 32, x: 112, y: 100 }
-        });
+        create: function ()
+        {
+            //  Enable world bounds, but disable the floor
+            this.physics.world.setBoundsCollision(true, true, true, false);
 
-        this.ball = this.physics.add.image(400, 500, 'assets', 'ball1').setCollideWorldBounds(true).setBounce(1);
-        this.ball.setData('onPaddle', true);
+            //  Create the bricks in a 10x6 grid
+            this.bricks = this.physics.add.staticGroup({
+                key: 'assets', frame: [ 'blue1', 'red1', 'green1', 'yellow1', 'silver1', 'purple1' ],
+                frameQuantity: 10,
+                gridAlign: { width: 10, height: 6, cellWidth: 64, cellHeight: 32, x: 112, y: 100 }
+            });
 
-        this.paddle = this.physics.add.image(400, 550, 'assets', 'paddle1').setImmovable();
+            this.ball = this.physics.add.image(400, 500, 'assets', 'ball1').setCollideWorldBounds(true).setBounce(1);
+            this.ball.setData('onPaddle', true);
 
-        //  Our colliders
-        this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
-        this.physics.add.collider(this.ball, this.paddle, this.hitPaddle, null, this);
+            this.paddle = this.physics.add.image(400, 550, 'assets', 'paddle1').setImmovable();
 
-        //  Input events
-        this.input.on('pointermove', function (pointer) {
+            //  Our colliders
+            this.physics.add.collider(this.ball, this.bricks, this.hitBrick, null, this);
+            this.physics.add.collider(this.ball, this.paddle, this.hitPaddle, null, this);
 
-            //  Keep the paddle within the game
-            this.paddle.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+            //  Input events
+            this.input.on('pointermove', function (pointer) {
 
-            if (this.ball.getData('onPaddle'))
+                //  Keep the paddle within the game
+                this.paddle.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+
+                if (this.ball.getData('onPaddle'))
+                {
+                    this.ball.x = this.paddle.x;
+                }
+
+            }, this);
+
+            this.input.on('pointerup', function (pointer) {
+
+                if (this.ball.getData('onPaddle'))
+                {
+                    this.ball.setVelocity(-75, -300);
+                    this.ball.setData('onPaddle', false);
+                }
+
+            }, this);
+        },
+
+        hitBrick: function (ball, brick)
+        {
+            brick.disableBody(true, true);
+
+            if (this.bricks.countActive() === 0)
             {
-                this.ball.x = this.paddle.x;
+                this.resetLevel();
             }
+        },
 
-        }, this);
-
-        this.input.on('pointerup', function (pointer) {
-
-            if (this.ball.getData('onPaddle'))
-            {
-                this.ball.setVelocity(-75, -300);
-                this.ball.setData('onPaddle', false);
-            }
-
-        }, this);
-    },
-
-    hitBrick: function (ball, brick)
-    {
-        brick.disableBody(true, true);
-
-        if (this.bricks.countActive() === 0)
+        resetBall: function ()
         {
-            this.resetLevel();
-        }
-    },
+            this.ball.setVelocity(0);
+            this.ball.setPosition(this.paddle.x, 500);
+            this.ball.setData('onPaddle', true);
+        },
 
-    resetBall: function ()
-    {
-        this.ball.setVelocity(0);
-        this.ball.setPosition(this.paddle.x, 500);
-        this.ball.setData('onPaddle', true);
-    },
-
-    resetLevel: function ()
-    {
-        this.resetBall();
-
-        this.bricks.children.each(function (brick) {
-
-            brick.enableBody(false, 0, 0, true, true);
-
-        });
-    },
-
-    hitPaddle: function (ball, paddle)
-    {
-        var diff = 0;
-
-        if (ball.x < paddle.x)
-        {
-            //  Ball is on the left-hand side of the paddle
-            diff = paddle.x - ball.x;
-            ball.setVelocityX(-10 * diff);
-        }
-        else if (ball.x > paddle.x)
-        {
-            //  Ball is on the right-hand side of the paddle
-            diff = ball.x -paddle.x;
-            ball.setVelocityX(10 * diff);
-        }
-        else
-        {
-            //  Ball is perfectly in the middle
-            //  Add a little random X to stop it bouncing straight up!
-            ball.setVelocityX(2 + Math.random() * 8);
-        }
-    },
-
-    update: function ()
-    {
-        if (this.ball.y > 600)
+        resetLevel: function ()
         {
             this.resetBall();
+
+            this.bricks.children.each(function (brick) {
+
+                brick.enableBody(false, 0, 0, true, true);
+
+            });
+        },
+
+        hitPaddle: function (ball, paddle)
+        {
+            var diff = 0;
+
+            if (ball.x < paddle.x)
+            {
+                //  Ball is on the left-hand side of the paddle
+                diff = paddle.x - ball.x;
+                ball.setVelocityX(-10 * diff);
+            }
+            else if (ball.x > paddle.x)
+            {
+                //  Ball is on the right-hand side of the paddle
+                diff = ball.x -paddle.x;
+                ball.setVelocityX(10 * diff);
+            }
+            else
+            {
+                //  Ball is perfectly in the middle
+                //  Add a little random X to stop it bouncing straight up!
+                ball.setVelocityX(2 + Math.random() * 8);
+            }
+        },
+
+        update: function ()
+        {
+            if (this.ball.y > 600)
+            {
+                this.resetBall();
+            }
         }
+
+    });
+
+    var config = {
+        type: Phaser.WEBGL,
+        width: 800,
+        height: 600,
+        parent: 'game',
+        scene: [ Breakout ],
+        physics: {
+            default: 'arcade'
+        }
+    };
+    
+    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
+    
+    function preload() {
+        // Load an image and call it 'logo'.
+        game.load.image( 'logo', 'assets/phaser.png' );
     }
-
-});
-
-var config = {
-    type: Phaser.WEBGL,
-    width: 800,
-    height: 600,
-    parent: 'phaser-example',
-    scene: [ Breakout ],
-    physics: {
-        default: 'arcade'
+    
+    var bouncy;
+    
+    function create() {
+        // Create a sprite at the center of the screen using the 'logo' image.
+        bouncy = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
+        // Anchor the sprite at its center, as opposed to its top-left corner.
+        // so it will be truly centered.
+        bouncy.anchor.setTo( 0.5, 0.5 );
+        
+        // Turn on the arcade physics engine for this sprite.
+        game.physics.enable( bouncy, Phaser.Physics.ARCADE );
+        // Make it bounce off of the world bounds.
+        bouncy.body.collideWorldBounds = true;
+        
+        // Add some text using a CSS style.
+        // Center it in X, and position its top 15 pixels from the top of the world.
+        var style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
+        var text = game.add.text( game.world.centerX, 15, "Build something amazing.", style );
+        text.anchor.setTo( 0.5, 0.0 );
+    }
+    
+    function update() {
+        // Accelerate the 'logo' sprite towards the cursor,
+        // accelerating at 500 pixels/second and moving no faster than 500 pixels/second
+        // in X or Y.
+        // This function returns the rotation angle that makes it visually match its
+        // new trajectory.
+        bouncy.rotation = game.physics.arcade.accelerateToPointer( bouncy, game.input.activePointer, 500, 500, 500 );
     }
 };
-
-var game = new Phaser.Game(config);
