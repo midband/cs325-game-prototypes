@@ -6,8 +6,8 @@ window.onload = function() {
 
 function preload() {
 
-    game.load.atlas('breakout', 'assets/games/breakout/breakout.png', 'assets/games/breakout/breakout.json');
-    game.load.image('starfield', 'assets/misc/starfield.jpg');
+    game.load.atlas('breakout', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
+    game.load.image('starfield', 'assets/breakout/bluebackground.jpg');
 
 }
 
