@@ -9,7 +9,7 @@ window.onload = function() {
     // You will need to change the paths you pass to "game.load.image()" or any other
     // loading functions to reflect where you are putting the assets.
     // All loading functions will typically all be found inside "preload()".
-    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
+    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, hitBrick: hitBrick, resetBall: resetBall, resetLevel: resetLevel, hitPaddle: hitPaddle, update: update } );
     
         var Breakout = new Phaser.Class({
 
