@@ -26,7 +26,7 @@ window.onload = function() {
             this.ball;
         },
 
-        preload: function ()
+        function preload()
         {
             this.load.atlas('assets', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
         },
