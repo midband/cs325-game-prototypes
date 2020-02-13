@@ -82,8 +82,6 @@ window.onload = function() {
         ball.body.collideWorldBounds = true;
         ball.body.bounce.set(1);
 
-        ball.animations.add('spin', [ 'ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png' ], 50, true, false);
-
         ball.events.onOutOfBounds.add(ballLost, this);
 
         scoreText = game.add.text(32, 550, 'score: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
@@ -130,7 +128,6 @@ window.onload = function() {
             ballOnPaddle = false;
             ball.body.velocity.y = -300;
             ball.body.velocity.x = -75;
-            ball.animations.play('spin');
             introText.visible = false;
         }
 
