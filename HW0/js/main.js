@@ -21,12 +21,15 @@ window.onload = function() {
         game.load.image('paddleclam', 'assets/breakout/blueclam.png');
         game.load.image('ballpearl', 'assets/breakout/pearl.png');
         game.load.image('starfield', 'assets/breakout/ocean.png');
+        game.load.audio('music', 'assets/breakout/Magicant-VG.mp3');
 
     }
 
     var ball;
     var paddle;
     var bricks;
+    
+    var music;
 
     var ballOnPaddle = true;
 
@@ -46,6 +49,8 @@ window.onload = function() {
         //  We check bounds collisions against all walls other than the bottom one
         game.physics.arcade.checkCollision.down = false;
 
+        music.loopFull(0.6);
+        
         s = game.add.tileSprite(0, 0, 800, 600, 'starfield');
 
         bricks = game.add.group();
