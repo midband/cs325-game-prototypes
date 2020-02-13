@@ -168,7 +168,7 @@ window.onload = function() {
     function ballLost () {
 
         lives--;
-        livesText.text = 'lives: ' + lives;
+        livesText.text = 'pearls: ' + lives;
 
         if (lives === 0)
         {
