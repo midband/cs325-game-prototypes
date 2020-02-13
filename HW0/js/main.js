@@ -20,7 +20,7 @@ window.onload = function() {
         game.load.atlas('breakout', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
         game.load.image('paddleclam', 'assets/breakout/blueclam.png');
         game.load.image('ballpearl', 'assets/breakout/pearl.png');
-        game.load.image('starfield', 'assets/breakout/ocean.png');
+        game.load.image('ocean', 'assets/breakout/ocean.png');
         game.load.audio('music', 'assets/breakout/Magicant-VG.mp3');
 
     }
@@ -56,7 +56,7 @@ window.onload = function() {
         const backgroundSound = game.add.audio('music', 0.5, true);
         backgroundSound.play();
         
-        s = game.add.tileSprite(0, 0, 800, 600, 'starfield');
+        s = game.add.tileSprite(0, 0, 800, 600, 'ocean');
 
         bricks = game.add.group();
         bricks.enableBody = true;
@@ -99,10 +99,10 @@ window.onload = function() {
         ball2.body.bounce.set(1);
 
         ball.events.onOutOfBounds.add(ballLost, this);
-        ball2.events.onOutOfBounds.add(ball2Lost, this);
+        ball2.events.onOutOfBounds.add(ballLost, this);
 
         scoreText = game.add.text(32, 550, 'score: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
-        livesText = game.add.text(680, 550, 'lives: 3', { font: "20px Arial", fill: "#ffffff", align: "left" });
+        livesText = game.add.text(680, 550, 'pearls: 3', { font: "20px Arial", fill: "#ffffff", align: "left" });
         introText = game.add.text(game.world.centerX, 400, '- click to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
         introText.anchor.setTo(0.5, 0.5);
 
@@ -177,33 +177,17 @@ window.onload = function() {
         else
         {
             ballOnPaddle = true;
-
-            ball.reset(paddle.body.x + 16, paddle.y - 16);
-
-            ball.animations.stop();
-        }
-
-    }
-    
-    function ball2Lost () {
-
-        lives--;
-        livesText.text = 'lives: ' + lives;
-
-        if (lives === 0)
-        {
-            gameOver();
-        }
-        else
-        {
             ball2OnPaddle = true;
 
+            ball.reset(paddle.body.x + 16, paddle.y - 16);
             ball2.reset(paddle.body.x + 16, paddle.y - 16);
 
+            ball.animations.stop();
             ball2.animations.stop();
         }
 
     }
+    
 
     function gameOver () {
 
