@@ -29,7 +29,7 @@ window.onload = function() {
     var paddle;
     var bricks;
     
-    var music;
+//  var music;    
 
     var ballOnPaddle = true;
 
@@ -49,7 +49,10 @@ window.onload = function() {
         //  We check bounds collisions against all walls other than the bottom one
         game.physics.arcade.checkCollision.down = false;
 
-        music.loopFull(0.6);
+//        music.loopFull(0.6);
+        
+        const backgroundSound = game.add.audio('music', 0.5, true);
+        backgroundSound.play();
         
         s = game.add.tileSprite(0, 0, 800, 600, 'starfield');
 
