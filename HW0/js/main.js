@@ -84,10 +84,10 @@ window.onload = function() {
         paddle.body.immovable = true;
 
         ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ballpearl');
-        ball.anchor.set(0.55);
+        ball.anchor.set(0.5);
         ball.checkWorldBounds = true;
         ball2 = game.add.sprite(game.world.centerX, paddle.y - 16, 'ballpearl');
-        ball2.anchor.set(0.45);
+        ball2.anchor.set(0.5);
         ball2.checkWorldBounds = true;
 
         game.physics.enable(ball, Phaser.Physics.ARCADE);
