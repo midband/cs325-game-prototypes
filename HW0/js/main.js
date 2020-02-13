@@ -217,7 +217,4 @@ window.onload = function() {
 
     }
 
-    });
-
-    
-};
+}
