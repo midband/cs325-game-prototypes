@@ -2,16 +2,16 @@
 
 window.onload = function() {
     
-    var config = {
-        type: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        parent: 'game',
-        scene: [ Breakout ],
-        physics: {
-            default: 'arcade'
-        }
-    };
+//     var config = {
+//        type: Phaser.AUTO,
+//        width: 800,
+//        height: 600,
+//        parent: 'game',
+//        scene: [ Breakout ],
+//        physics: {
+//            default: 'arcade'
+//        }
+//    };
     
     var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
 
