@@ -18,7 +18,9 @@ window.onload = function() {
     function preload() {
 
         game.load.atlas('breakout', 'assets/breakout/breakout.png', 'assets/breakout/breakout.json');
-        game.load.image('starfield', 'assets/breakout/bluebackground.jpg');
+        game.load.image('paddleclam', 'assets/breakout/blueclam.png');
+        game.load.image('ballpearl', 'assets/breakout/pearl.png');
+        game.load.image('starfield', 'assets/breakout/ocean.png');
 
     }
 
@@ -62,7 +64,7 @@ window.onload = function() {
             }
         }
 
-        paddle = game.add.sprite(game.world.centerX, 500, 'breakout', 'paddle_big.png');
+        paddle = game.add.sprite(game.world.centerX, 500, 'breakout', 'blueclam.png');
         paddle.anchor.setTo(0.5, 0.5);
 
         game.physics.enable(paddle, Phaser.Physics.ARCADE);
@@ -71,7 +73,7 @@ window.onload = function() {
         paddle.body.bounce.set(1);
         paddle.body.immovable = true;
 
-        ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'breakout', 'ball_1.png');
+        ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'breakout', 'pearl.png');
         ball.anchor.set(0.5);
         ball.checkWorldBounds = true;
 
