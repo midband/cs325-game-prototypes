@@ -64,7 +64,7 @@ window.onload = function() {
             }
         }
 
-        paddle = game.add.sprite(game.world.centerX, 500, 'blueclam.png');
+        paddle = game.add.sprite(game.world.centerX, 500, 'paddleclam');
         paddle.anchor.setTo(0.5, 0.5);
 
         game.physics.enable(paddle, Phaser.Physics.ARCADE);
@@ -73,7 +73,7 @@ window.onload = function() {
         paddle.body.bounce.set(1);
         paddle.body.immovable = true;
 
-        ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'pearl.png');
+        ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ballpearl');
         ball.anchor.set(0.5);
         ball.checkWorldBounds = true;
 
