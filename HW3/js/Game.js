@@ -25,18 +25,6 @@ GameStates.makeGame = function( game, shared ) {
     
     return {
         
-        preload: function () {
-
-            game.load.tilemap('level1', 'assets/starstruck/level1.json', null, Phaser.Tilemap.TILED_JSON);
-            game.load.image('tiles-1', 'assets/starstruck/tiles-1.png');
-            game.load.spritesheet('dude', 'assets/starstruck/dude.png', 32, 48);
-            game.load.spritesheet('droid', 'assets/starstruck/droid.png', 32, 32);
-            game.load.image('starSmall', 'assets/starstruck/star.png');
-            game.load.image('starBig', 'assets/starstruck/star2.png');
-            game.load.image('background', 'assets/starstruck/background2.png');
-
-        },
-    
         create: function () {
     
             game.physics.startSystem(Phaser.Physics.ARCADE);
