@@ -35,7 +35,7 @@ GameStates.makeGame = function( game, shared ) {
             game.load.image('starBig', 'assets/starstruck/star2.png');
             game.load.image('background', 'assets/starstruck/background2.png');
 
-        }
+        },
     
         create: function () {
     
