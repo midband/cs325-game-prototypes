@@ -16,6 +16,7 @@ function preload() {
 
 var map;
 var tileset;
+var backgroundLayer;
 var layer;
 var player;
 var facing = 'left';
