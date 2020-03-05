@@ -11,7 +11,7 @@ function preload() {
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
-    game.load.audio('music', 'Time runnin.mp3');
+    game.load.audio('music', 'assets/Time runnin.mp3');
 
 }
 
