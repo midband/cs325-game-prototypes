@@ -30,12 +30,13 @@ function create() {
 
     game.stage.backgroundColor = '#97dafd';
 
-    bg = game.add.tileSprite(0, 0, 800, 600, 'background');
-    bg.fixedToCamera = true;
+//    bg = game.add.tileSprite(0, 0, 800, 600, 'background');
+//    bg.fixedToCamera = true;
 
     map = game.add.tilemap('level1');
     map.addTilesetImage('tiles_spritesheet', 'tiles-1');
 
+    backgroundLayer = map.createLayer('Background');
     layer = map.createLayer('Tile Layer 1');
 
     map.setCollisionBetween(1, 100, true, 'Tile Layer 1');
