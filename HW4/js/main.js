@@ -28,18 +28,17 @@ function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    game.stage.backgroundColor = '#000000';
+    game.stage.backgroundColor = '#97dafd';
 
     bg = game.add.tileSprite(0, 0, 800, 600, 'background');
     bg.fixedToCamera = true;
 
     map = game.add.tilemap('level1');
-
-    map.addTilesetImage('tiles-1');
-
-    map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
+    map.addTilesetImage('tiles_spritesheet', 'tiles-1');
 
     layer = map.createLayer('Tile Layer 1');
+
+    map.setCollisionBetween(1, 100, true, 'Tile Layer 1');
 
     //  Un-comment this on to see the collision tiles
     // layer.debug = true;
