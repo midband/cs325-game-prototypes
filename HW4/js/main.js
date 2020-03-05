@@ -40,12 +40,14 @@ function create() {
     backgroundLayer = map.createLayer('Background');
     layer = map.createLayer('Tile Layer 1');
 
+    layer.resizeWorld();
+
     map.setCollisionBetween(1, 999, true, 'Tile Layer 1');
 
     //  Un-comment this on to see the collision tiles
-    // layer.debug = true;
+    layer.debug = true;
 
-    layer.resizeWorld();
+    
 
     game.physics.arcade.gravity.y = 250;
 
