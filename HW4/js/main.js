@@ -11,6 +11,7 @@ function preload() {
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
+    game.load.audio('music', 'Time runnin.mp3');
 
 }
 
@@ -44,12 +45,15 @@ function create() {
 
     map.setCollisionBetween(1, 999, true, 'Tile Layer 1');
 
+    const backgroundSound = game.add.audio('music', 0.5, true);
+    backgroundSound.play();
+
     //  Un-comment this on to see the collision tiles
     layer.debug = true;
 
     
 
-    game.physics.arcade.gravity.y = 250;
+    game.physics.arcade.gravity.y = 275;
 
     player = game.add.sprite(32, 32, 'dude');
     game.physics.enable(player, Phaser.Physics.ARCADE);
