@@ -34,7 +34,7 @@ function create() {
 //    bg.fixedToCamera = true;
 
     map = game.add.tilemap('level1');
-    map.addTilesetImage('level1', 'tiles_spritesheet');
+    map.addTilesetImage('tiles_spritesheet');
 
     backgroundLayer = map.createLayer('Background');
     layer = map.createLayer('Tile Layer 1');
