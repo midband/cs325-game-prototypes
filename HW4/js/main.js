@@ -114,7 +114,7 @@ function update() {
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
     {
         player.body.velocity.y = -250;
-        jumpTimer = game.time.now + 750;
+        jumpTimer = game.time.now + 50;
     }
 
 }
