@@ -40,7 +40,7 @@ function create() {
     backgroundLayer = map.createLayer('Background');
     layer = map.createLayer('Tile Layer 1');
 
-    map.setCollisionBetween(1, 100, true, 'Tile Layer 1');
+    map.setCollisionBetween(1, 999, true, 'Tile Layer 1');
 
     //  Un-comment this on to see the collision tiles
     // layer.debug = true;
