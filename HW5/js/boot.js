@@ -10,10 +10,11 @@ var BootScene = new Phaser.Class({
     },
 
     preload: function ()
-    {
+    {  
+        this.load.audio('music', 'assets/Go lins 2.mp3');
         // map tiles
         this.load.image('tiles', 'assets/map/spritesheet.png');
-        this.load.image('colored', 'assets/battleground/battleground.png');
+        this.load.image('colored', 'assets/battleground/colored.png');
         
         // map in json format
         this.load.tilemapTiledJSON('map', 'assets/map/map.json');

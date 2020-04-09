@@ -17,7 +17,9 @@ var BattleScene = new Phaser.Class({
         var battleground = this.make.tilemap({ key: 'battleground' });
         
         // first parameter is the name of the tilemap in tiled
-        var tiles = battleground.addTilesetImage('colored', 'colored');
+        var colored = battleground.addTilesetImage('colored', 'colored');
+
+        var background = battleground.createStaticLayer('Background - not trans', colored, 0, 0);
 
         this.startBattle();
         // on wake event we call startBattle too
@@ -25,23 +27,23 @@ var BattleScene = new Phaser.Class({
     },
     startBattle: function() {
         // player character - warrior
-        var warrior = new PlayerCharacter(this, 250, 50, "player", 1, "Warrior", 100, 20);        
-        this.add.existing(warrior);
+        // var warrior = new PlayerCharacter(this, 250, 50, "player", 1, "Warrior", 100, 20);        
+        // this.add.existing(warrior);
         
         // player character - mage
-        var mage = new PlayerCharacter(this, 250, 100, "player", 4, "Mage", 80, 8);
+        var mage = new PlayerCharacter(this, 260, 208, "player", 6, "Player", 100, 6);
         this.add.existing(mage);            
         
-        var dragonblue = new Enemy(this, 50, 50, "dragonblue", null, "Dragon", 50, 3);
+        var dragonblue = new Enemy(this, 500, 208, "dragonblue", null, "Dragon", 50, 2);
         this.add.existing(dragonblue);
         
-        var dragonOrange = new Enemy(this, 50, 100, "dragonorrange", null,"Dragon2", 50, 3);
-        this.add.existing(dragonOrange);
+        //var dragonOrange = new Enemy(this, 50, 100, "dragonorrange", null,"Dragon2", 50, 2);
+        //this.add.existing(dragonOrange);
         
         // array with heroes
-        this.heroes = [ warrior, mage ];
+        this.heroes = [ mage ];
         // array with enemies
-        this.enemies = [ dragonblue, dragonOrange ];
+        this.enemies = [ dragonblue ];
         // array with both parties, who will attack
         this.units = this.heroes.concat(this.enemies);
         
@@ -302,7 +304,10 @@ var ActionsMenu = new Phaser.Class({
             
     function ActionsMenu(x, y, scene) {
         Menu.call(this, x, y, scene);   
-        this.addMenuItem("Attack");
+        this.addMenuItem("Arrow (0)");
+        this.addMenuItem("Fire Arrow (10)");
+        this.addMenuItem("Ice Arrow (10)");
+        this.addMenuItem("Spirit Arrow (20)");
     },
     confirm: function() { 
         // we select an action and go to the next menu and choose from the enemies to apply the action
@@ -340,22 +345,22 @@ var UIScene = new Phaser.Class({
     create: function ()
     {    
         // draw some background for the menu
-        this.graphics = this.add.graphics();
-        this.graphics.lineStyle(1, 0xffffff);
-        this.graphics.fillStyle(0x031f4c, 1);        
-        this.graphics.strokeRect(2, 150, 90, 100);
-        this.graphics.fillRect(2, 150, 90, 100);
-        this.graphics.strokeRect(95, 150, 90, 100);
-        this.graphics.fillRect(95, 150, 90, 100);
-        this.graphics.strokeRect(188, 150, 130, 100);
-        this.graphics.fillRect(188, 150, 130, 100);
+        // this.graphics = this.add.graphics();
+        // this.graphics.lineStyle(1, 0xffffff);
+        // this.graphics.fillStyle(0x031f4c, 1);        
+        // this.graphics.strokeRect(2, 150, 90, 100);
+        // this.graphics.fillRect(2, 150, 90, 100);
+        // this.graphics.strokeRect(95, 150, 90, 100);
+        // this.graphics.fillRect(95, 150, 90, 100);
+        // this.graphics.strokeRect(188, 150, 130, 100);
+        // this.graphics.fillRect(188, 150, 130, 100);
         
         // basic container to hold all menus
         this.menus = this.add.container();
                 
-        this.heroesMenu = new HeroesMenu(195, 153, this);           
-        this.actionsMenu = new ActionsMenu(100, 153, this);            
-        this.enemiesMenu = new EnemiesMenu(8, 153, this);   
+        this.heroesMenu = new HeroesMenu(190, 40, this);           
+        this.actionsMenu = new ActionsMenu(190, 240, this);            
+        this.enemiesMenu = new EnemiesMenu(495, 40, this);   
         
         // the currently selected menu 
         this.currentMenu = this.actionsMenu;
@@ -448,7 +453,7 @@ var Message = new Phaser.Class({
 
     initialize:
     function Message(scene, events) {
-        Phaser.GameObjects.Container.call(this, scene, 160, 30);
+        Phaser.GameObjects.Container.call(this, scene, 384, 65);
         var graphics = this.scene.add.graphics();
         this.add(graphics);
         graphics.lineStyle(1, 0xffffff, 0.8);
