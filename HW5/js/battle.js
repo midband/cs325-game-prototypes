@@ -12,6 +12,13 @@ var BattleScene = new Phaser.Class({
     {    
         // change the background to green
         this.cameras.main.setBackgroundColor("rgba(0, 200, 0, 0.5)");
+
+        // create the map
+        var battleground = this.make.tilemap({ key: 'battleground' });
+        
+        // first parameter is the name of the tilemap in tiled
+        var tiles = battleground.addTilesetImage('colored', 'colored');
+
         this.startBattle();
         // on wake event we call startBattle too
         this.sys.events.on('wake', this.startBattle, this);             
