@@ -16,8 +16,9 @@ var WorldScene = new Phaser.Class({
 
     create: function ()
     {
-        var music = this.sound.add('music');
-        music.setVolume(0.75);
+        var music = this.sound.add('music', 0.75, true);
+        // music.setVolume(0.75);
+        // music.loop = true;
         music.play();
 
         // create the map

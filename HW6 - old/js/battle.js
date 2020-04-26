@@ -2,29 +2,14 @@ var BattleScene = new Phaser.Class({
 
     Extends: Phaser.Scene,
 
-    initialize :
+    initialize:
 
     function BattleScene ()
     {
         Phaser.Scene.call(this, { key: "BattleScene" });
     },
-    
-    
     create: function ()
     {    
-        var scrollSound = this.sound.add('scrollSound', 0.75, false);
-        var selectSound = this.sound.add('selectSound', 0.75, false);
-        var fireSound = this.sound.add('fireSound', 0.75, false);
-        var enemyFireSound = this.sound.add('enemyFireSound', 0.75, false);
-        // var scrollSound = this.sound.add('scrollSound');
-        // scrollSound.setVolume(0.75);
-        // var selectSound = this.sound.add('selectSound');
-        // selectSound.setVolume(0.75);
-        // var fireSound = this.sound.add('fireSound');
-        // fireSound.setVolume(0.75);
-        // var enemyFireSound = this.sound.add('enemyFireSound');
-        // enemyFireSound.setVolume(0.75);
-
         // change the background to green
         this.cameras.main.setBackgroundColor("rgba(0, 200, 0, 0.5)");
 
@@ -67,10 +52,6 @@ var BattleScene = new Phaser.Class({
         this.scene.run("UIScene");        
     },
     nextTurn: function() {  
-        var fireSound = this.sound.add('fireSound', 0.75, false);
-        // fireSound.setVolume(0.75);
-        var enemyFireSound = this.sound.add('enemyFireSound', 0.75, false);
-        // enemyFireSound.setVolume(0.75);
         // if we have victory or game over
         if(this.checkEndBattle()) {           
             this.endBattle();
@@ -87,7 +68,6 @@ var BattleScene = new Phaser.Class({
         // if its player hero
         if(this.units[this.index] instanceof PlayerCharacter) {
             // we need the player to select action and then enemy
-            
             this.events.emit("PlayerSelect", this.index);
         } else { // else if its enemy unit
             // pick random living hero to be attacked
@@ -96,7 +76,6 @@ var BattleScene = new Phaser.Class({
                 r = Math.floor(Math.random() * this.heroes.length);
             } while(!this.heroes[r].living) 
             // call the enemy's attack function 
-            enemyFireSound.play();
             this.units[this.index].attack(this.heroes[r]);  
             // add timer for the next turn, so will have smooth gameplay
             this.time.addEvent({ delay: 3000, callback: this.nextTurn, callbackScope: this });
@@ -120,9 +99,7 @@ var BattleScene = new Phaser.Class({
     },
     // when the player have selected the enemy to be attacked
     receivePlayerSelection: function(action, target) {
-        var fireSound = this.sound.add('fireSound', 0.75, false);
         if(action == "attack") {            
-            fireSound.play();
             this.units[this.index].attack(this.enemies[target]);              
         }
         // next turn in 3 seconds
@@ -240,10 +217,6 @@ var Menu = new Phaser.Class({
         this.x = x;
         this.y = y;        
         this.selected = false;
-        // var scrollSound = this.sound.add('scrollSound');
-        // scrollSound.setVolume(0.75);
-        // var selectSound = this.sound.add('selectSound');
-        // selectSound.setVolume(0.75);
     },     
     addMenuItem: function(unit) {
         var menuItem = new MenuItem(0, this.menuItems.length * 20, unit, this.scene);
@@ -253,30 +226,25 @@ var Menu = new Phaser.Class({
     },  
     // menu navigation 
     moveSelectionUp: function() {
-        // var scrollSound = this.sound.add('scrollSound', 0.75, false);
         this.menuItems[this.menuItemIndex].deselect();
         do {
             this.menuItemIndex--;
             if(this.menuItemIndex < 0)
                 this.menuItemIndex = this.menuItems.length - 1;
         } while(!this.menuItems[this.menuItemIndex].active);
-        // scrollSound.play();
         this.menuItems[this.menuItemIndex].select();
     },
     moveSelectionDown: function() {
-        // var scrollSound = this.sound.add('scrollSound', 0.75, false);
         this.menuItems[this.menuItemIndex].deselect();
         do {
             this.menuItemIndex++;
             if(this.menuItemIndex >= this.menuItems.length)
                 this.menuItemIndex = 0;
         } while(!this.menuItems[this.menuItemIndex].active);
-        // scrollSound.play();
         this.menuItems[this.menuItemIndex].select();
     },
     // select the menu as a whole and highlight the choosen element
     select: function(index) {
-        // var selectSound = this.sound.add('selectSound', 0.75, false);
         if(!index)
             index = 0;       
         this.menuItems[this.menuItemIndex].deselect();
@@ -288,7 +256,6 @@ var Menu = new Phaser.Class({
             if(this.menuItemIndex == index)
                 return;
         }        
-        // selectSound.play();
         this.menuItems[this.menuItemIndex].select();
         this.selected = true;
     },
@@ -470,9 +437,9 @@ var UIScene = new Phaser.Class({
                 this.currentMenu.moveSelectionUp();
             } else if(event.code === "ArrowDown") {
                 this.currentMenu.moveSelectionDown();
-            } else if(event.code === "Shift") {
+            } else if(event.code === "ArrowRight" || event.code === "Shift") {
 
-            } else if(event.code === "Space" || event.code === "ArrowRight") {
+            } else if(event.code === "Space" || event.code === "ArrowLeft") {
                 this.currentMenu.confirm();
             } 
         }
