@@ -9,7 +9,6 @@ var BattleScene = new Phaser.Class({
         Phaser.Scene.call(this, { key: "BattleScene" });
     },
     
-    
     create: function ()
     {    
         var scrollSound = this.sound.add('scrollSound', 0.75, false);
@@ -46,10 +45,10 @@ var BattleScene = new Phaser.Class({
         // this.add.existing(warrior);
         
         // player character - mage
-        var mage = new PlayerCharacter(this, 260, 208, "player", 6, "Player", 100, 6);
+        var mage = new PlayerCharacter(this, 260, 208, "player", 6, "Player", 100, 6, 100, "Player");
         this.add.existing(mage);            
         
-        var dragonblue = new Enemy(this, 500, 208, "dragonblue", null, "Dragon", 50, 2);
+        var dragonblue = new Enemy(this, 500, 208, "dragonblue", null, "Dragon", 50, 2, 0, "Ice");
         this.add.existing(dragonblue);
         
         //var dragonOrange = new Enemy(this, 50, 100, "dragonorrange", null,"Dragon2", 50, 2);
@@ -63,10 +62,15 @@ var BattleScene = new Phaser.Class({
         this.units = this.heroes.concat(this.enemies);
         
         this.index = -1; // currently active unit
-        
+
         this.scene.run("UIScene");        
     },
     nextTurn: function() {  
+        var hp = 100;
+        var mana = 100;
+        this.add.text(10, 10, 'HP: ' + hp);
+        this.add.text(10, 30, 'Mana: ' + mana);
+        
         var fireSound = this.sound.add('fireSound', 0.75, false);
         // fireSound.setVolume(0.75);
         var enemyFireSound = this.sound.add('enemyFireSound', 0.75, false);
@@ -87,8 +91,9 @@ var BattleScene = new Phaser.Class({
         // if its player hero
         if(this.units[this.index] instanceof PlayerCharacter) {
             // we need the player to select action and then enemy
-            
             this.events.emit("PlayerSelect", this.index);
+            mana -= 10;
+
         } else { // else if its enemy unit
             // pick random living hero to be attacked
             var r;
@@ -150,11 +155,13 @@ var Unit = new Phaser.Class({
 
     initialize:
 
-    function Unit(scene, x, y, texture, frame, type, hp, damage) {
+    function Unit(scene, x, y, texture, frame, type, hp, damage, mana, element) {
         Phaser.GameObjects.Sprite.call(this, scene, x, y, texture, frame)
         this.type = type;
         this.maxHp = this.hp = hp;
-        this.damage = damage; // default damage     
+        this.damage = damage; // default damage
+        this.mana = mana;
+        this.element = element;     
         this.living = true;         
         this.menuItem = null;
     },
@@ -185,8 +192,8 @@ var Enemy = new Phaser.Class({
     Extends: Unit,
 
     initialize:
-    function Enemy(scene, x, y, texture, frame, type, hp, damage) {
-        Unit.call(this, scene, x, y, texture, frame, type, hp, damage);
+    function Enemy(scene, x, y, texture, frame, type, hp, damage, mana, element) {
+        Unit.call(this, scene, x, y, texture, frame, type, hp, damage, mana, element);
     }
 });
 
@@ -194,8 +201,8 @@ var PlayerCharacter = new Phaser.Class({
     Extends: Unit,
 
     initialize:
-    function PlayerCharacter(scene, x, y, texture, frame, type, hp, damage) {
-        Unit.call(this, scene, x, y, texture, frame, type, hp, damage);
+    function PlayerCharacter(scene, x, y, texture, frame, type, hp, damage, mana, element) {
+        Unit.call(this, scene, x, y, texture, frame, type, hp, damage, mana, element);
         // flip the image so I don"t have to edit it manually
         this.flipX = true;
         
