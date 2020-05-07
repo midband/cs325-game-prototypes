@@ -20,7 +20,7 @@ game.state.add('play', {
 
         this.game.load.image('gold_coin', 'assets/I_GoldCoin.png');
         this.game.load.image('scroll', 'assets/I_Scroll02.png');
-        this.game.load.image('book', 'assets/W_book02.png');
+        this.game.load.image('book', 'assets/W_Book02.png');
 
         this.game.load.audio('clickSound', 'assets/tick_002.ogg');
         this.game.load.audio('goldSound', 'assets/confirmation_002.ogg');
