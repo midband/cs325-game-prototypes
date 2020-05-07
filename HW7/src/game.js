@@ -63,8 +63,8 @@ game.state.add('play', {
     create: function() {
         var state = this;
 
-        theme = this.sound.add('theme', 0.31, true);
-        bossTheme = this.sound.add('bossTheme', 0.3, true);
+        theme = this.sound.add('theme', 0.38, true);
+        bossTheme = this.sound.add('bossTheme', 0.4, true);
         theme.play();
 
         this.background = this.game.add.image(0,0,'classroom');
